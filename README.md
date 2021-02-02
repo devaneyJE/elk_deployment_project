@@ -4,11 +4,11 @@ The files in this repository were used to configure the network depicted below.
 
 ![Azure Network Diagram:](Diagrams/ELK_Azure_Deployment.png)
 
-These files have been tested and used to generate a live ELK deployment on Azure. They can be used to recreate the entire deployment pictured above. Alternatively, select portions of the `install-elk.yml` file may be used to install only certain pieces of it, such as Filebeat.
+These files have been tested and used to generate a live ELK deployment on Azure. They can be used to recreate the entire deployment pictured above. Alternatively, using select playbooks of those included may be used to install only certain aspects of this system monitoring solution, such as Filebeat.
 
 
 This document contains the following details:
-- Description of the Topologu
+- Description of the Topology
 - Access Policies
 - ELK Configuration
   - Beats in Use
@@ -36,11 +36,11 @@ The configuration details of each machine may be found below.
 
 ### Access Policies
 
-The machines on the internal network are not exposed to the public Internet. 
+Only the webservers on the internal network are exposed to the public Internet.
 
-Only the Jump-Box-Provisioner machine can accept connections from the Internet. Access to this machine is only allowed from the network-external Administration Machine via SSH.
+Access to the Jump-Box-Provisioner machine is only allowed from a network-external Administration Machine via SSH.
 
-Machines within the network can only be accessed by the Jump-Box-Provisioner's Ansible container.
+The Jump-Box-Provisioner's Ansible container is used to access all network machines for administration purposes.
 
 A summary of the access policies in place can be found in the table below.
 
@@ -56,10 +56,10 @@ A summary of the access policies in place can be found in the table below.
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because IaC is utilized to improve system maintenance and configuration with automation. This allows for deployments scalable to the degree of any organization's needs.
 
 The playbook implements the following tasks:
-- Installs docker, pip3, and the python docker module to be able to deploy Docker containers via Ansible
-- Adjusts virtual memory utilization to properly support ELK Stack container
-- Download ELK container, image: `sebp/elk:761`
-- Configure Docker service to run on machine boot
+- Installs docker, pip3, and the python docker module to be able to deploy Docker containers via Ansible.
+- Adjusts virtual memory utilization to properly support ELK Stack container.
+- Download ELK container, image: `sebp/elk:761`.
+- Configure Docker service to run on machine boot.
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
