@@ -2,7 +2,7 @@
 
 The files in this repository were used to configure the network depicted below.
 
-![Azure Network Diagram:](Diagrams/ELK_Azure_Deployment.png)
+![Azure Network Diagram:](images/ELK_Azure_Deployment.png)
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to recreate the entire deployment pictured above. Alternatively, using select playbooks of those included may be used to install only certain aspects of this system monitoring solution, such as Filebeat.
 
