@@ -1,0 +1,16 @@
+#! /bin/bash
+
+#Creating the key and IV
+openssl enc -pbkdf2 -nosalt -aes-256-cbc -k mypassword -P > key_and_IV
+#extracting key and IV
+keyAndIV=$(cat key_and_IV | awk -F = '{print $2, $3}')
+key=$(echo $keyAndIV | awk '{print $1}')
+iv=$(echo $keyAndIV  | awk '{print $2}')
+#Encrypting a file
+openssl enc -pbkdf2 -nosalt -aes-256-cbc -in message.txt -out meetingplace.txt.enc -base64 -K $key -iv $iv
+#Printing out ciphertext
+echo "This is your ciphertext: "
+cat meetingplace.txt.enc
+#Decrypting a file
+echo "This is your plaintext: "
+openssl enc -pbkdf2 -nosalt -aes-256-cbc -in meetingplace.txt.enc -d -base64 -base64 -K $key -iv $iv

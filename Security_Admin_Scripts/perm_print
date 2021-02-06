@@ -1,0 +1,31 @@
+#! /bin/bash
+
+# printing title for sensitive file permissions
+echo -e 'Sensitive file permission:\n'
+# create list with paths of sensitive files
+path_list=('/etc/passwd' '/etc/shadow')
+# iterate through the list, printing permissions of files
+for file in ${path_list[@]};
+do
+	ls -l $file
+done
+
+# print blank line
+echo ' '
+
+# printing line starting sudo permissions section of output
+echo -e '\nSudo permissions by user:\n'
+# iterate through dir names in home directory (users with home dirs) 
+for user in $(ls /home);
+do
+	# exclude user.hashes file (not a dir for user)
+	if [ $user != 'user.hashes' ]
+	then
+		# giving username as title for each permission listing
+		echo "$user:"
+		sudo -lU $user
+		echo ' '
+	fi
+done
+
+

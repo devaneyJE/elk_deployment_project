@@ -1,0 +1,4 @@
+#! /bin/bash
+
+echo -e "\nTop 10 Processes" >> ~/research/sys_info.txt
+ps aux --sort -%mem | awk '{print $1, $2, $3, $4, $11}' | head >> ~/research/sys_info.txt

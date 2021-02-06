@@ -1,0 +1,13 @@
+#! /bin/bash
+
+DIR=~/research
+
+if [ -d $DIR ]
+then
+	echo $DIR 'already exists!'
+else
+	mkdir ~/research
+fi
+
+echo -e "\n777 Files:" >> ~/research/sys_info.txt
+file $(find /home -type f -perm 777) >> ~/research/sys_info.txt

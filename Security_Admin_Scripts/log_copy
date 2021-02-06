@@ -1,0 +1,3 @@
+#! /bin/bash
+
+mkdir -p ~/research && cp -r /etc/passwd /etc/shadow /etc/hosts /var/log/* ~/research

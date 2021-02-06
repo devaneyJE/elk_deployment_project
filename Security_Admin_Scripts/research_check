@@ -1,0 +1,29 @@
+#! /bin/bash
+
+# declaring vars
+DIR=~/research
+FILE=~/research/sys_info.txt
+
+
+# checking for directory
+if [ -d $DIR ]
+then
+	echo $DIR 'already exists!'
+else
+	mkdir ~/research
+fi
+
+# checking for file
+if [ -f $FILE ]
+then
+	echo $FILE 'already exists!'
+else
+	rm $FILE	
+fi
+
+
+# bonus activity
+IP=$(ip addr | grep inet | tail -2 | head -1)
+echo $IP
+
+
