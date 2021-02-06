@@ -83,24 +83,37 @@ These Beats allow us to collect the following information from each machine:
 - Gathering data with `metricbeat` will show information about system metrics relating to Docker. This logging would provide information about the availability status and resource usage of the service being used to provide services to visitors of the public site.
 
 ### Using the Playbook
-In order to use the playbook, you will need to have an Ansible container control node already configured. Assuming you have such a control node provisioned: 
+In order to use the playbook, you will need to have an Ansible container control node already configured. Assuming you have such a container provisioned:
 
 SSH into the control node and follow the steps below:
-- Copy the `install_e.yml` file to `/etc/ansible`. 
+- Copy the [install_elk.yml](Cloud_Configuration/elk/install-elk.yml) file to `/etc/ansible` Ansible container. 
 - Update the `/etc/ansible/hosts` file to include...
 ```
 [elk]
-10.2.0.4 ansible_python_interpreter=/usr/bin/python3
+<elk-server-private-ip> ansible_python_interpreter=/usr/bin/python3
 ```
-- Run the playbook, and navigate to `http://<elk_server_ip>:5601/app/kibana` to check that the installation worked as expected.
+The ansible.cfg file in `/etc/ansible` should contain the following line with `admin_user` being the adminstration username set when initially creating VMs on the virtual network.
+```
+remote_user = <admin_user>
+```
+- The playbook can be run from the `/etc/ansible` directory with the following:
+```
+ansible-playbook install_elk.yml
+```
+Allow a few minutes before navigating to `http://<elk_server_public_ip>:5601/app/kibana` to check that the installation worked as expected. The relevant Network Security Group should allow inbound traffic to this machine on port 5601, ideally only from your administration machine and others that would potentially need access to the dashboard.
 
 To add `filebeat` and `metricbeat`, the included playbooks and configurations can be used with the provisioned control node using the following steps:
-- Copy the `filebeat_playbook.yml` and `metricbeat_playbook.yml` files to `/etc/ansible/roles`. 
-- Copy the `filebeat-config.yml` and `metricbeat-config.yml` files to `/etc/ansible/files`. 
-- Run the playbooks from the `/etc/ansible` directory; visit the Kibana dashboard to view filesystem and Docker metric logs.
+- Copy the [filebeat_playbook.yml](Cloud_Configuration/filebeat/filebeat_playbook.yml) and [metricbeat_playbook.yml](Cloud_Configuration/metricbeat/metricbeat-playbook.yml) files to `/etc/ansible/roles`. 
+- Copy the [filebeat-config.yml](Cloud_Configuration/filebeat/filebeat-config.yml) and [metricbeat-config.yml](Cloud_Configuration/metricbeat/metricbeat-config.yml) files to `/etc/ansible/files` in the container. 
+- Run the playbooks from the `/etc/ansible` directory with the following: 
+```
+ansible-playbook roles/filebeat_playbook.yml
+ansible-playbook roles/metricbeat_playbook.yml
+```
+Visit the Kibana dashboard to view filesystem and Docker metrics logs.
 
 ### Using this Repository
-With a functioning webserver infrastructure and a new machine designated as an ELK monitoring server, this repository can be used to set up the ELK server and configure webservers to be monitored. The file `webserver-setup.yml` is included showing the setup configuration of the webservers used in this project. This repository can be downloaded and used by following these steps:
+With a functioning webserver infrastructure and a new machine designated as an ELK monitoring server, this repository can be used to set up the ELK server and configure webservers to be monitored. The file `webserver-setup.yml`[webserver-setup.yml](Cloud_Configuration/ansible-config/ansible.cfg) is included showing the setup configuration of the webservers used in this project. This repository can be downloaded and used by following these steps:
 - Access control node.
 - Run `git clone git@github.com:devaneyJE/elk_deployment_project.git`.
 - Follow the steps in the [Using the Playbook](#Using-the-Playbook) section.
